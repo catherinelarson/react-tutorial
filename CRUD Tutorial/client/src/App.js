@@ -1,51 +1,40 @@
 import './App.css';
 import { useState } from "react";
-
+import Axios from 'axios';
 function App() {
 
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(0);
-  const [country, setCountry] = useState("");
-  const [position, setPosition] = useState("");
-  const [wage, setWage] = useState(0);
+  const [title, setTitle] = useState("");
+  const [info, setInfo] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
 
+  const addItem = () => {
+    Axios.post("http://localhost:3000/create", {title: title, info: info, date: date, time:time}).then(console.log("sent")); //this is the buddy object, sending this to the backend when this is called
+  }
   return (
     <div className="App">
+      <div className = "header">To-Do List</div>
       <div className="information">
-      <label>Name</label>
-      <input 
-      type="text" 
-      onChange={
-        (event) => { setName(event.target.value);}
-        }></input>
-      <label>Age</label>
-      <input 
-      type="number"
-      onChange={
-        (event) => { setAge(event.target.value);}
-        }></input>
-      <label>Country</label>
-      <input 
-      type="text"
-      onChange={
-        (event) => { setCountry(event.target.value);}
-        }></input>
-      <label>Position</label>
-      <input 
-      type="text"
-      onChange={
-        (event) => { setPosition(event.target.value);}
-        }></input>
-      <label>Wage (annual):</label>
-      <input 
-      type="number"
-      onChange={
-        (event) => { setWage(event.target.value);}
-        }></input>
-      <button>Add Employee</button>
+      <label>Title</label>
+      <input type="text" onChange={(event) => {
+        setTitle(event.target.value);
+      }}></input>
+      <label>Info</label>
+      <input type="text" onChange={(event) => {
+        setInfo(event.target.value);
+      }}></input>
+      <label>Due date</label>
+      <input type="text" onChange={(event) => {
+        setDate(event.target.value);
+      }}></input>
+      <label>Time due</label>
+      <input type="text" onChange={(event) => {
+        setTime(event.target.value);
+      }}></input>
+      <button onClick={addItem()}>Add Item</button>
       </div>
     </div>
-  )
+  );
 }
 
 export default App;
