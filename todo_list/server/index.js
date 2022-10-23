@@ -23,9 +23,30 @@ app.post("/create", (req, res) => {
         if(err) {
             console.log(err);
         } else {
-            console.log("heya hiya howdy");
-            res.send("how are you today??");
-            ++indx;
+            res.send("Values inserted");
+            console.log("worked!");
+        }
+    });
+});
+
+app.get("/items", (req, res) => {
+    db.query("SELECT * FROM todo_items",
+    (err, result) => {
+        if(err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    });
+});
+
+app.delete("/delete/:ID", (req, res) => {
+    const ID = req.params.ID
+    db.query("DELETE FROM todo_items WHERE ID = ?", [ID], (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
         }
     });
 });
